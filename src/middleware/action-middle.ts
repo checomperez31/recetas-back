@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import pageable, { Pagination } from '../libs/page-util';
 import Action, { ActionModel } from '../models/action-model';
 
 export default {
@@ -12,12 +13,19 @@ export default {
             });
         } else {
             entity = new Action({description});
-            await entity.save( entity ).catch(err => {
+            await entity.save().catch(err => {
                 return res.status( 500 ).send({message: 'No se ha podido guardar'});
             });
         }
         return res.status( 200 ).send( entity );
     },
-    query: async () => {},
-    find: async () => {},
+    query: async (req: Request, res: Response) => {
+        const pagination: Pagination = pageable(req.query);
+        const actions: ActionModel[] = await Action.find(pagination.query, pagination.projection, pagination.options);
+        return res.status(200).send(actions);
+    },
+    find: async (req: Request, res: Response) => {
+        const action: ActionModel | null = await Action.findById( req.params.id );
+        return res.status(200).send(action);
+    },
 };
