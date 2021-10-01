@@ -27,5 +27,12 @@ export default {
     find: async (req: Request, res: Response) => {
         const role: RoleModel | null = await Role.findById( req.params.id );
         return res.status(200).send(role);
+    },
+    delete: async (req: Request, res: Response) => {
+        const role: RoleModel | null = await Role.findById( req.params.id );
+        if ( role == null ) return res.status( 404 ).send({ message: 'No se encontró el rol' });
+        role.status = role.status === 'A' ? 'I' : 'A';
+        role.save();
+        return res.status( 200 ).send( role );
     }
 }

@@ -7,5 +7,6 @@ router.post('/', ActionMiddle.save);
 router.put('/', ActionMiddle.save);
 router.get('/', ActionMiddle.query);
 router.get('/:id', ActionMiddle.find);
+router.delete('/:id', ActionMiddle.delete);
 
 export default router;

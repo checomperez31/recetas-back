@@ -1,7 +1,8 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 export interface RoleModel extends mongoose.Document {
-    role: string
+    role: string,
+    status: string
 }
 
 const Role = new Schema({
@@ -9,6 +10,10 @@ const Role = new Schema({
     insertDate: {
         type: Date,
         default: new Date( Date.now() )
+    },
+    status: {
+        type: String,
+        default: 'A'
     }
 });
 

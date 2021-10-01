@@ -28,4 +28,13 @@ export default {
         const action: ActionModel | null = await Action.findById( req.params.id );
         return res.status(200).send(action);
     },
+    delete: async (req: Request, res: Response) => {
+        const action: ActionModel | null = await Action.findById( req.params.id );
+        if ( action == null ) return res.status( 400 ).send( { message: 'No se ha encontrado la acción' } );
+        action.status = action.status == 'A' ? 'I' : 'A';
+        await action.save().catch(err => {
+            return res.status( 500 ).send({message: 'No se ha podido guardar'});
+        });
+        return res.status( 200 ).send( action );
+    }
 };

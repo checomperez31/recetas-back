@@ -1,7 +1,8 @@
 import mongoose, {Schema, model} from 'mongoose';
 
 export interface ActionModel extends mongoose.Document {
-    description: string
+    description: string,
+    status: string
 }
 
 const Action = new Schema({
@@ -9,6 +10,10 @@ const Action = new Schema({
     insertDate: {
         type: Date,
         default: new Date( Date.now() )
+    },
+    status: {
+        type: String,
+        default: 'A'
     }
 });
 
